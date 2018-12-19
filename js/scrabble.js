@@ -177,9 +177,10 @@ function scoreWord() {
 		// Updates score on page
 		$("#scoreBox").html("<h2>" + score + " </h2>");
 		$("#totalScoreBox").html("<h2>" + totalScore + " </h2>");
+
+		newRound();
 	}
 
-	newRound();
 }
 
 // Check that tiles are in consecutive slots on the board
