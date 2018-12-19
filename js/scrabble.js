@@ -135,7 +135,7 @@ function get_full_rack() {
 	for (var i = 0; i < 7; i++) {
 		tile = get_tile();
 		var elem = "#r" + i;
-		var content = "<img class='tile' id= 't" + i + "' data-index= '" + i + "' data-value= '"+ tile + "' src='img/" + tile + ".jpg' alt=" + tile +">";
+		var content = "<img class='tile' id= 't" + i + "' data-index= '" + i + "' data-value= '"+ tile + "' src='/img/" + tile + ".jpg' alt=" + tile +">";
 		$(elem).append(content);
 	}
 }
