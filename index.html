@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
+    />
+   
+    <title>Scrabble</title>
+</head>
+ <!--
+     File: https://vanhauml.github.io/Comp4610_a9/index.html
+     Assignment 9: Implementing a Bit of Scrabble with Drag-and-Drop
+     Course: COMP4610 GUI I
+     Name: Van Ha, Senior UMass Lowell EE/CS Student
+     Email: van_ha@student.uml.edu
+     Copyright 2018 by Van Ha
+     Date Updated: 12/19/2018
+
+    This web app simulates the game of Scrabble with only
+    one line of the board. It uses jQuery UI's draggable
+    and droppable features to simulate the moving of tiles
+    from the tile holder to the board.
+
+    index.html file was validated at https://validator.w3.org.
+  -->
+<body>
+    <h1>LET'S PLAY SCRABBLE! NO WHAMMY!</h1>
+    <div id="top">
+        <div id="totalFlex">
+                <div id="totalScore"><h2>Total Score: </h2> </div>
+                <div id ="totalScoreBox"></div>
+        </div>
+        <div id="scoreFlex">
+                <div id="score"><h2>Score of Last Word: </h2></div>
+                <div id = "scoreBox"></div>
+        </div>
+        
+        
+        <form id="form">
+            <input type="button" value="Submit Word for Scoring" onclick=scoreWord()>
+            <input type="button" value="New Round" onclick=newRound()>
+            <input type="button" value="Reset Game" onclick=resetGame()>
+        </form>
+    </div>
+    <div id="container">
+        <div id="board">
+            <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "0" id="b0"></div>
+            <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "1" id="b1"></div>
+            <div class="board_block ui-droppable double_word" data-letterVal = "1" data-wordVal = "2" data-index = "2" id="b2"></div>
+            <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "3" id="b3"></div>
+            <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "4" id="b4"></div>
+            <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "5" id="b5"></div>
+            <div class="board_block ui-droppable double_letter" data-letterVal = "2" data-wordVal = "1" data-index = "6" id="b6"></div>
+            <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "7" id="b7"></div>
+            <div class="board_block ui-droppable double_letter" data-letterVal = "2" data-wordVal = "1" data-index = "8" id="b8"></div>
+            <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "9" id="b9"></div>
+            <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "10" id="b10"></div>
+            <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "11" id="b11"></div>
+            <div class="board_block ui-droppable double_word" data-letterVal = "1" data-wordVal = "2" data-index = "12" id="b12"></div>
+            <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "13" id="b13"></div>
+            <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "14" id="b14"></div>
+        </div>
+        <div id="holder">
+            <div class="rack" id="r0"></div>
+            <div class="rack" id="r1"></div>
+            <div class="rack" id="r2"></div>
+            <div class="rack" id="r3"></div>
+            <div class="rack" id="r4"></div>
+            <div class="rack" id="r5"></div>
+            <div class="rack" id="r6"></div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    
+    <script src="/js/scrabble.js"></script>
+</body>
+</html>

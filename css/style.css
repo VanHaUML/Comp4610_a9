@@ -1,0 +1,108 @@
+/*
+    File: https://vanhauml.github.io/Comp4610_a9/css/style.css
+    Assignment 9: Implementing a Bit of Scrabble with Drag-and-Drop
+    Course: COMP4610 GUI I
+    Name: Van Ha, Senior UMass Lowell EE/CS Student
+    Email: van_ha@student.uml.edu
+    Copyright 2018 by Van Ha
+    Date Updated: 12/19/2018
+
+    CSS file for Implementing a Bit of Scrabble with Drag-and-Drop.
+
+	style.css file was validated at https://jigsaw.w3.org/css-validator/.
+*/
+
+html, body {
+    height: 100%;
+}
+
+h1{
+    text-align: center;
+    color: red;
+    border:2px solid red;
+    background-color: yellow;
+}
+
+/* flexbox used so elements holding board and
+    rack can be stacked
+*/
+#container {
+    display: flex;
+    flex-direction: column;
+}
+
+#board{
+    width: 1550px;
+    min-width:1500px;
+    margin: auto;
+}
+
+.board_block {
+    width: 100px;
+    min-width: 100px;
+    height: 100px;
+    margin: 1px;
+    float: left;
+}
+
+/* background images for each block in board row */
+.blank {
+    background: url("/img/blank.png");
+}
+
+.double_word {
+    background: url("/img/double_word.png");
+}
+
+.double_letter {
+    background: url("/img/double_letter.png");
+}
+
+/* styling for tile rack */
+#holder {
+    display: block;
+    background-position: center;
+    width:750px;
+    height: 130px;
+    margin: auto;
+    margin-top: 50px;
+    background: 750px 130px url("/img/Tile_Holder.png");
+    background-size: contain no-repeat-x;
+
+}
+
+/* styling separate blocks within tile rack where tiles are put */
+.rack {
+    display: inline-block;
+    width: 100x;
+    height: 90px;
+}
+
+/* styling for each tile */
+.tile {
+    width: 90px;
+    height: 90px;
+}
+
+#top {
+    display: flex;
+    margin: 25px;
+}
+
+#totalFlex, #scoreFlex {
+    display: flex;
+}
+
+#totalScore, #score {
+    color: red;
+    width: 50%;
+    height: 100px;
+    padding: 10px;
+}
+
+#scoreBox, #totalScoreBox {
+    width: 50%;
+    margin: auto;
+    color: blue;
+    font: 25px;
+}
