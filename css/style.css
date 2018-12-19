@@ -84,6 +84,7 @@ h1{
     height: 90px;
 }
 
+/* styling for top where scores and messages are shown */
 #top {
     display: flex;
     margin: 25px;
