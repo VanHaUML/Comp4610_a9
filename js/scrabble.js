@@ -7,11 +7,16 @@
 	 Copyright 2018 by Van Ha
 	 Date Updated: 12/19/2018
 
-    Javascript file for Implementing a Bit of Scrabble with Drag-and-Drop.
-
+	Javascript file for Implementing a Bit of Scrabble with Drag-and-Drop.
+	Extensive use of jQuery UI and its draggable and droppable widgets.
 */
 
-// 	Data structure for tiles, their value, and quantity
+/* 	Data structure for tiles, their value, and quantity.
+	Had to change the _ to - to represent a blank since
+	github threw an error about not being able to find
+	the "_.jpg" but "-.jpg" works.
+*/
+
 tiles = {	"A" : {"value" : 1, "quantity" : 9},
 			"B" : {"value" : 3, "quantity" : 2},
 			"C" : {"value" : 3, "quantity" : 2},
@@ -38,7 +43,7 @@ tiles = {	"A" : {"value" : 1, "quantity" : 9},
 			"X" : {"value" : 8, "quantity" : 1},
 			"Y" : {"value" : 4, "quantity" : 2},
 			"Z" : {"value" : 10, "quantity" : 1},
-			"_" : {"value" : 0, "quantity" : 2}
+			"-" : {"value" : 0, "quantity" : 2}
 };
 
 // Keeps track of which tile in the rack has been used
@@ -55,12 +60,26 @@ var tilesInPlay = {	"r0": false,
 var totalScore = 0;
 var score = 0;
 var word = {};
+var wordList = {};
 
-// Where it begins
+// Start of script when DOM loads
 $(function(){
-	get_full_rack();
+	// Reads words from file into dictionary
+	// Source: https://johnresig.com/blog/dictionary-lookups-in-javascript/
+	$.get( "other/words", function( txt ) {
+		// Get an array of all the words
+		var words = txt.split( "\n" );
+	 
+		// And add them as properties to the dictionary lookup
+		// This will allow for fast lookups later
+		for ( var i = 0; i < words.length; i++ ) {
+			wordList[words[i]] = true;
+		}
+	});
 
+	get_full_rack();
 	start();
+
 });
 
 
@@ -124,7 +143,7 @@ function start() {
 function number_to_letter(number) {
 	var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
 					"L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W",
-					"X", "Y", "Z", "_"];
+					"X", "Y", "Z", "-"];
 	
 	return letters[number];
 }
@@ -160,26 +179,46 @@ function get_tile() {
 function scoreWord() {
 	score = 0;
 	var doubleWordScore = 1;
+	var wordToValidate = "";
 	
-	// checks if letters are in consecutive board blocks before scoring
+	/* Checks if letters are in consecutive board blocks before scoring.
+		Also validates against word list
+	*/
 	if(isConsecutive()) {
+		$("#message").html("");
+
 		$.each(word, function(key, value) {
 			var blockID = "#" + key;
 			var letterVal =  tiles[value.letterUsed].value;
 			var doubleLetterVal = $(blockID).attr("data-letterVal");
 			doubleWordScore *= $(blockID).attr("data-wordVal");
 			score += letterVal * doubleLetterVal;
+			wordToValidate += value["letterUsed"];
 		});
 
-		score *= doubleWordScore;
-		totalScore += score;
+		wordToValidate = wordToValidate.toLowerCase();
 
-		// Updates score on page
-		$("#scoreBox").html("<h2>" + score + " </h2>");
-		$("#totalScoreBox").html("<h2>" + totalScore + " </h2>");
+		if (wordList[wordToValidate]) {
+			score *= doubleWordScore;
+			totalScore += score;
+
+			// Updates score on page
+			$("#scoreBox").html("<h2>" + score + " </h2>");
+			$("#totalScoreBox").html("<h2>" + totalScore + " </h2>");
+
+			newRound();
+		}
+		else {
+			// Error message if word is not in dictionary
+			$("#message").html("<h2>" + wordToValidate + " Is Not a Valid Word</h2>");
+		}
+		
+	}
+	else {
+		// Error message if letters are not contiguous
+		$("#message").html("<h2>Letters Must Be In Consecutive Slots</h2>");
 	}
 
-	newRound();
 }
 
 // Check that tiles are in consecutive slots on the board
@@ -198,7 +237,9 @@ function isConsecutive() {
 function newRound() {
 	$.each(tilesInPlay, function(key,value) {
 		if (value == true) {
-			// Places tile used back in bag to be picked again
+			/* Places tile used back in bag to be picked again since user can play
+				indefinitely so tiles must not run out.
+			*/
 			var tileIndex = key[1];
 			var oldTile = $("#t" + tileIndex).attr("data-value");			;
 			tiles[oldTile]["quantity"]++;
@@ -206,7 +247,7 @@ function newRound() {
 			var new_tile = get_tile();
 			var index = key[1];
 			$("#" + key).html("<img class='tile' id= 't" + index + "' data-index= '" + index + "' data-value= '" + 
-				new_tile + "' src='/img/" + new_tile + ".jpg' alt=" + new_tile +">")
+				new_tile + "' src='img/" + new_tile + ".jpg' alt=" + new_tile +">")
 			tilesInPlay[key] = false;
 		}
 	});
