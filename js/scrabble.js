@@ -135,7 +135,7 @@ function get_full_rack() {
 	for (var i = 0; i < 7; i++) {
 		tile = get_tile();
 		var elem = "#r" + i;
-		var content = "<img class='tile' id= 't" + i + "' data-index= '" + i + "' data-value= '"+ tile + "' src='../img/" + tile + ".jpg' alt=" + tile +">";
+		var content = "<img class='tile' id= 't" + i + "' data-index= '" + i + "' data-value= '"+ tile + "' src='img/" + tile + ".jpg' alt=" + tile +">";
 		$(elem).append(content);
 	}
 }
@@ -206,7 +206,7 @@ function newRound() {
 			var new_tile = get_tile();
 			var index = key[1];
 			$("#" + key).html("<img class='tile' id= 't" + index + "' data-index= '" + index + "' data-value= '" + 
-				new_tile + "' src='../img/" + new_tile + ".jpg' alt=" + new_tile +">")
+				new_tile + "' src='img/" + new_tile + ".jpg' alt=" + new_tile +">")
 			tilesInPlay[key] = false;
 		}
 	});
