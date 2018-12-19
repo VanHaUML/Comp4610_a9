@@ -59,7 +59,9 @@ var wordList = {};
 
 // Where it begins
 $(function(){
-	$.get( "../words", function( txt ) {
+	// Reads words from file into dictionary
+	// Source: https://johnresig.com/blog/dictionary-lookups-in-javascript/
+	$.get( "words", function( txt ) {
 		// Get an array of all the words
 		var words = txt.split( "\n" );
 	 
@@ -189,7 +191,6 @@ function scoreWord() {
 			wordToValidate += value["letterUsed"];
 		});
 		wordToValidate = wordToValidate.toLowerCase();
-		console.log(wordToValidate);
 		if (wordList[wordToValidate]) {
 			score *= doubleWordScore;
 			totalScore += score;
