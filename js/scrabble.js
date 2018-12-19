@@ -55,12 +55,24 @@ var tilesInPlay = {	"r0": false,
 var totalScore = 0;
 var score = 0;
 var word = {};
+var wordList = {};
 
 // Where it begins
 $(function(){
-	get_full_rack();
+	$.get( "../words", function( txt ) {
+		// Get an array of all the words
+		var words = txt.split( "\n" );
+	 
+		// And add them as properties to the dictionary lookup
+		// This will allow for fast lookups later
+		for ( var i = 0; i < words.length; i++ ) {
+			wordList[words[i]] = true;
+		}
+	});
 
+	get_full_rack();
 	start();
+
 });
 
 
@@ -160,8 +172,12 @@ function get_tile() {
 function scoreWord() {
 	score = 0;
 	var doubleWordScore = 1;
+	var wordToValidate = "";
 	
-	// checks if letters are in consecutive board blocks before scoring
+	/* Checks if letters are in consecutive board blocks before scoring.
+		Also validates against word list
+	*/
+
 	if(isConsecutive()) {
 		$("#message").html("");
 		$.each(word, function(key, value) {
@@ -170,16 +186,22 @@ function scoreWord() {
 			var doubleLetterVal = $(blockID).attr("data-letterVal");
 			doubleWordScore *= $(blockID).attr("data-wordVal");
 			score += letterVal * doubleLetterVal;
+			wordToValidate += value["letterUsed"];
 		});
+		if (wordList[wordToValidate]) {
+			score *= doubleWordScore;
+			totalScore += score;
 
-		score *= doubleWordScore;
-		totalScore += score;
+			// Updates score on page
+			$("#scoreBox").html("<h2>" + score + " </h2>");
+			$("#totalScoreBox").html("<h2>" + totalScore + " </h2>");
 
-		// Updates score on page
-		$("#scoreBox").html("<h2>" + score + " </h2>");
-		$("#totalScoreBox").html("<h2>" + totalScore + " </h2>");
-
-		newRound();
+			newRound();
+		}
+		else {
+			$("#message").html("<h2>" + wordToValidate + " Is Not a Valid Word</h2>");
+		}
+		
 	}
 	else {
 		$("#message").html("<h2>Letters Must Be In Consecutive Slots</h2>");
