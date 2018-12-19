@@ -38,7 +38,7 @@ tiles = {	"A" : {"value" : 1, "quantity" : 9},
 			"X" : {"value" : 8, "quantity" : 1},
 			"Y" : {"value" : 4, "quantity" : 2},
 			"Z" : {"value" : 10, "quantity" : 1},
-			"_" : {"value" : 0, "quantity" : 2}
+			"-" : {"value" : 0, "quantity" : 2}
 };
 
 // Keeps track of which tile in the rack has been used
@@ -138,7 +138,7 @@ function start() {
 function number_to_letter(number) {
 	var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
 					"L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W",
-					"X", "Y", "Z", "_"];
+					"X", "Y", "Z", "-"];
 	
 	return letters[number];
 }
