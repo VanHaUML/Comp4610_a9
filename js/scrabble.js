@@ -7,11 +7,16 @@
 	 Copyright 2018 by Van Ha
 	 Date Updated: 12/19/2018
 
-    Javascript file for Implementing a Bit of Scrabble with Drag-and-Drop.
-
+	Javascript file for Implementing a Bit of Scrabble with Drag-and-Drop.
+	Extensive use of jQuery UI and its draggable and droppable widgets.
 */
 
-// 	Data structure for tiles, their value, and quantity
+/* 	Data structure for tiles, their value, and quantity.
+	Had to change the _ to - to represent a blank since
+	github threw an error about not being able to find
+	the "_.jpg" but "-.jpg" works.
+*/
+
 tiles = {	"A" : {"value" : 1, "quantity" : 9},
 			"B" : {"value" : 3, "quantity" : 2},
 			"C" : {"value" : 3, "quantity" : 2},
@@ -57,7 +62,7 @@ var score = 0;
 var word = {};
 var wordList = {};
 
-// Where it begins
+// Start of script when DOM loads
 $(function(){
 	// Reads words from file into dictionary
 	// Source: https://johnresig.com/blog/dictionary-lookups-in-javascript/
@@ -179,9 +184,9 @@ function scoreWord() {
 	/* Checks if letters are in consecutive board blocks before scoring.
 		Also validates against word list
 	*/
-
 	if(isConsecutive()) {
 		$("#message").html("");
+
 		$.each(word, function(key, value) {
 			var blockID = "#" + key;
 			var letterVal =  tiles[value.letterUsed].value;
@@ -190,7 +195,9 @@ function scoreWord() {
 			score += letterVal * doubleLetterVal;
 			wordToValidate += value["letterUsed"];
 		});
+
 		wordToValidate = wordToValidate.toLowerCase();
+
 		if (wordList[wordToValidate]) {
 			score *= doubleWordScore;
 			totalScore += score;
@@ -202,11 +209,13 @@ function scoreWord() {
 			newRound();
 		}
 		else {
+			// Error message if word is not in dictionary
 			$("#message").html("<h2>" + wordToValidate + " Is Not a Valid Word</h2>");
 		}
 		
 	}
 	else {
+		// Error message if letters are not contiguous
 		$("#message").html("<h2>Letters Must Be In Consecutive Slots</h2>");
 	}
 
@@ -228,7 +237,9 @@ function isConsecutive() {
 function newRound() {
 	$.each(tilesInPlay, function(key,value) {
 		if (value == true) {
-			// Places tile used back in bag to be picked again
+			/* Places tile used back in bag to be picked again since user can play
+				indefinitely so tiles must not run out.
+			*/
 			var tileIndex = key[1];
 			var oldTile = $("#t" + tileIndex).attr("data-value");			;
 			tiles[oldTile]["quantity"]++;
