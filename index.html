@@ -24,13 +24,15 @@
     This web app simulates the game of Scrabble with only
     one line of the board. It uses jQuery UI's draggable
     and droppable features to simulate the moving of tiles
-    from the tile holder to the board.
+    from the tile holder to the board. It also validates
+    the word against a dictionary.
 
     index.html file was validated at https://validator.w3.org.
   -->
 <body>
     <h1>LET'S PLAY SCRABBLE! NO WHAMMY!</h1>
     <div id="top">
+        <!-- divs for total score and score of last valid word -->
         <div id="totalFlex">
                 <div id="totalScore"><h2>Total Score: </h2> </div>
                 <div id ="totalScoreBox"></div>
@@ -40,15 +42,18 @@
                 <div id = "scoreBox"></div>
         </div>
         
-        
+        <!-- form with buttons for scoring word, starting new round, and resetting game -->
         <form id="form">
             <input type="button" value="Submit Word for Scoring" onclick=scoreWord()>
             <input type="button" value="New Round" onclick=newRound()>
             <input type="button" value="Reset Game" onclick=resetGame()>
         </form>
+
+        <!-- message box for errors -->
         <div id="message"></div>
     </div>
     <div id="container">
+        <!-- one rowof scrabble board with divs representing each letter block -->
         <div id="board">
             <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "0" id="b0"></div>
             <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "1" id="b1"></div>
@@ -66,6 +71,7 @@
             <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "13" id="b13"></div>
             <div class="board_block ui-droppable blank" data-letterVal = "1" data-wordVal = "1" data-index = "14" id="b14"></div>
         </div>
+        <!-- tile rack where tiles will be dynamically placed--> 
         <div id="holder">
             <div class="rack" id="r0"></div>
             <div class="rack" id="r1"></div>
