@@ -175,6 +175,11 @@ function get_tile() {
 
 }
 
+// helper function to sort numbers
+function sortNum(x, y) {
+	return (x-y);
+}
+
 // Scores the word, updates total Score, and starts new round
 function scoreWord() {
 	score = 0;
@@ -186,16 +191,23 @@ function scoreWord() {
 	*/
 	if(isConsecutive()) {
 		$("#message").html("");
-
+		var keyIndex = [];
 		$.each(word, function(key, value) {
 			var blockID = "#" + key;
 			var letterVal =  tiles[value.letterUsed].value;
 			var doubleLetterVal = $(blockID).attr("data-letterVal");
 			doubleWordScore *= $(blockID).attr("data-wordVal");
 			score += letterVal * doubleLetterVal;
-			wordToValidate += value["letterUsed"];
+			keyIndex.push($(blockID).attr("data-index"));
 		});
 
+		keyIndex.sort(sortNum);
+
+		$.each(keyIndex, function(i, v) {
+			var x = "b" + v;
+			wordToValidate += word[x]["letterUsed"];
+		})
+		
 		wordToValidate = wordToValidate.toLowerCase();
 
 		if (wordList[wordToValidate]) {
